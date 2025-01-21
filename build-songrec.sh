@@ -19,7 +19,6 @@ dpkg-source -x "$(basename $songrec_dsc)"
 cd songrec-0.4.3jammy
 sudo apt build-dep -y .
 cargo install cargo-deb
-DEB_ARCH="$(dpkg --print-architecture)"
-cargo deb --deb-version 0.4.3-1bpo1-"$DEB_ARCH"
+cargo deb --deb-version 0.4.3-1bpo1
 mkdir -p /tmp/hosttmp/songrec_deb
 cp -v ./target/debian/*deb /tmp/hosttmp/songrec_deb/
