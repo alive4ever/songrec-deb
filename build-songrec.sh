@@ -1,0 +1,19 @@
+export DEBFULLNAME="alive4ever"
+export DEBEMAIL="alive4ever@users.noreply.github.com"
+mkdir -p ~/build
+cd ~/build
+songrec_dsc="https://launchpad.net/~marin-m/+archive/ubuntu/songrec/+sourcefiles/songrec/0.4.3jammy/songrec_0.4.3jammy.dsc"
+songrec_srctarball="https://launchpad.net/~marin-m/+archive/ubuntu/songrec/+sourcefiles/songrec/0.4.3jammy/songrec_0.4.3jammy.tar.xz"
+
+for url in "$songrec_dsc" "$songrec_srctarball" ; do
+	curl -LO "$url"
+done
+
+dpkg-source -x "$(basename $songrec_dsc)"
+cd songrec-0.4.3jammy
+sudo apt build-dep -y .
+dch --newversion 0.4.3-1bpo1 --distribution bookworm "Rebuild for bookworm"
+debuild -us -uc
+mkdir -p /tmp/hosttmp/songrec_deb
+cp -v *.deb /tmp/hosttmp/songrec_deb/
+
