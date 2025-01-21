@@ -10,7 +10,8 @@ for url in "$songrec_dsc" "$songrec_srctarball" ; do
 done
 echo "Installing latest rust..."
 curl -Lo ~/rust-bootstrap.sh https://sh.rustup.rs
-. ~/rust-bootstrap.sh
+chmod +x ~/rust-bootstrap.sh
+~/rust-bootstrap.sh -y -v
 echo "Finished installing latest rust..."
 export PATH="$HOME/.cargo/bin:$PATH"
 rustc --version
