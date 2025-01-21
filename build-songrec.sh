@@ -17,9 +17,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 rustc --version
 dpkg-source -x "$(basename $songrec_dsc)"
 cd songrec-0.4.3jammy
-sudo apt build-dep -y .
-dch -b --newversion 0.4.3-1bpo1 --distribution bookworm "Rebuild for bookworm"
-debuild -us -uc -b
+cargo install cargo-deb
+cargo deb --deb-version 0.4.3-1bpo1
 mkdir -p /tmp/hosttmp/songrec_deb
-cp -v *.deb /tmp/hosttmp/songrec_deb/
-
+cp -v ./target/debian/*deb /tmp/hosttmp/songrec_deb/
