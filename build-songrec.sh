@@ -8,7 +8,12 @@ songrec_srctarball="https://launchpad.net/~marin-m/+archive/ubuntu/songrec/+sour
 for url in "$songrec_dsc" "$songrec_srctarball" ; do
 	curl -LO "$url"
 done
-
+echo "Installing latest rust..."
+curl -Lo ~/rust-bootstrap.sh https://sh.rustup.rs
+. ~/rust-bootstrap.sh
+echo "Finished installing latest rust..."
+export PATH="$HOME/.cargo/bin:$PATH"
+rustc --version
 dpkg-source -x "$(basename $songrec_dsc)"
 cd songrec-0.4.3jammy
 sudo apt build-dep -y .
