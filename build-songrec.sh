@@ -12,8 +12,8 @@ apt source --download-only songrec
 dpkg-source -x songrec_${PKG_VERSION}${PPA_CODENAME}.dsc
 cd songrec-${PKG_VERSION}${PPA_CODENAME}
 sudo apt build-dep -y .
-dch -b --newversion ${PKG_VERSION}${PPA_CODENAME}-1bpo0 --distribution trixie "Rebuild for trixie"
-debuild -us -uc
+dch -b --newversion ${PKG_VERSION}-1bpo0 --distribution trixie "Rebuild for trixie"
+debuild --no-tgz-check -us -uc -b
 cd ..
 mkdir -p /tmp/hosttmp/songrec_deb
 cp -v *deb /tmp/hosttmp/songrec_deb/
