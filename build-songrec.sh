@@ -13,7 +13,10 @@ mv songrec-${PKG_VERSION}${PPA_CODENAME} songrec-${PKG_VERSION}
 cd songrec-$PKG_VERSION
 sudo apt build-dep -y .
 dch -b --newversion $PKG_VERSION-1bpo2 --distribution trixie "Rebuild for trixie"
-dpkg-buildpackage -us -uc
+cd ..
+dpkg-source -b songrec-${PKG_VERSION}
+cd songrec-$PKG_VERSION
+debuild -us -uc
 cd ..
 mkdir -p /tmp/hosttmp/songrec_deb
 cp -v *deb /tmp/hosttmp/songrec_deb/
