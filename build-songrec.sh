@@ -9,7 +9,8 @@ echo "deb-src [signed-by=/etc/apt/keyrings/songrec-ppa.asc] https://ppa.launchpa
 curl -L "$SIGNING_KEY" | sudo tee /etc/apt/keyrings/songrec-ppa.asc
 sudo apt update
 apt source songrec
-cd songrec-${PKG_VERSION}${PPA_CODENAME}
+mv songrec-${PKG_VERSION}${PPA_CODENAME} songrec-${PKG_VERSION}
+cd songrec-$PKG_VERSION
 sudo apt build-dep -y .
 dch -b --newversion $PKG_VERSION-1bpo2 --distribution trixie "Rebuild for trixie"
 debuild -us -uc
