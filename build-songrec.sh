@@ -1,24 +1,18 @@
 export DEBFULLNAME="alive4ever"
 export DEBEMAIL="alive4ever@users.noreply.github.com"
+export PKG_VERSION=0.4.3
+export PPA_CODENAME="noble"
+export SIGNING_KEY="https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x86a389b4b401fab17a0168506888550b2fc77d09"
 mkdir -p ~/build
 cd ~/build
-songrec_dsc="https://launchpad.net/~marin-m/+archive/ubuntu/songrec/+sourcefiles/songrec/0.4.3jammy/songrec_0.4.3jammy.dsc"
-songrec_srctarball="https://launchpad.net/~marin-m/+archive/ubuntu/songrec/+sourcefiles/songrec/0.4.3jammy/songrec_0.4.3jammy.tar.xz"
-
-for url in "$songrec_dsc" "$songrec_srctarball" ; do
-	curl -LO "$url"
-done
-echo "Installing latest rust..."
-curl -Lo ~/rust-bootstrap.sh https://sh.rustup.rs
-chmod +x ~/rust-bootstrap.sh
-~/rust-bootstrap.sh -y -v
-echo "Finished installing latest rust..."
-export PATH="$HOME/.cargo/bin:$PATH"
-rustc --version
-dpkg-source -x "$(basename $songrec_dsc)"
-cd songrec-0.4.3jammy
+echo "deb-src [signed-by=/etc/apt/keyrings/songrec-ppa.asc] https://ppa.launchpadcontent.net/marin-m/songrec/ubuntu noble main" | sudo tee /etc/apt/sources.list.d/songrec.list
+curl -L "$SIGNING_KEY" | sudo tee /etc/apt/keyrings/songrec-ppa.asc
+sudo apt update
+apt source songrec
+cd songrec-${PKG_VERSION}${PPA_CODENAME}
 sudo apt build-dep -y .
-cargo install cargo-deb
-cargo deb --deb-version 0.4.3-1bpo1
+dch -b --newversion $PKG_VERSION-1bpo2 --distribution trixie "Rebuild for trixie"
+debuild -us -uc
+cd ..
 mkdir -p /tmp/hosttmp/songrec_deb
-cp -v ./target/debian/*deb /tmp/hosttmp/songrec_deb/
+cp -v *deb /tmp/hosttmp/songrec_deb/
