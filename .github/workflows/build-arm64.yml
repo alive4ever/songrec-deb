@@ -17,7 +17,7 @@ jobs:
           sudo apt update
           sudo apt upgrade -y
           sudo apt install -y mmdebstrap systemd-container debian-archive-keyring
-          sudo mmdebstrap --arch=arm64 --include sudo,curl,build-essential,devscripts bookworm /var/lib/machines/arm64-debian
+          sudo mmdebstrap --arch=arm64 --include sudo,curl,build-essential,devscripts trixie /var/lib/machines/arm64-debian
           echo "Container successfully created"
       - name: Preparing repository
         uses: actions/checkout@v4
