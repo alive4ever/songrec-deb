@@ -1,6 +1,6 @@
 export DEBFULLNAME="alive4ever"
 export DEBEMAIL="alive4ever@users.noreply.github.com"
-export PKG_VERSION=0.4.3
+export PKG_VERSION=0.7.4
 export PPA_CODENAME="noble"
 export SIGNING_KEY="https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x86a389b4b401fab17a0168506888550b2fc77d09"
 mkdir -p ~/build
